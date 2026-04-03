@@ -2,7 +2,8 @@
  * @solvinghealth/identity — Identity Management
  *
  * Open source identity primitives for healthcare: NPI validation,
- * ComfortCard digital identity, W3C DID, and Remote Online Notarization.
+ * ComfortCard digital identity, W3C DID, Remote Online Notarization,
+ * WorkOS AuthKit integration, ABAC policy engine, and audit logging.
  *
  * MIT License
  */
@@ -108,3 +109,73 @@ export {
   recordFaceMatch,
   recordIDVerification,
 } from './ron.js';
+
+// WorkOS AuthKit Integration
+export {
+  type WorkOSConfig,
+  type SolvingHealthRole,
+  type WorkOSUser,
+  type WorkOSSession,
+  type AuthorizationUrlOptions,
+  type CallbackResult,
+  type RedactionLevel,
+  type AccessDecision,
+  type RoleMappingEntry,
+  type WorkOSOrganizationId,
+  type OrganizationMember,
+  WorkOSConfigSchema,
+  WorkOSUserSchema,
+  WorkOSSessionSchema,
+  AccessDecisionSchema,
+  SolvingHealthRoleSchema,
+  WORKOS_ORGANIZATIONS,
+  getWorkOSClient,
+  getAuthorizationUrl,
+  handleCallback,
+  getUserProfile,
+  createUser,
+  listOrganizationMembers,
+  refreshSession,
+  mapWorkOSRole,
+} from './workos.js';
+
+// Attribute-Based Access Control (ABAC)
+export {
+  type ResourceDescriptor,
+  type ResourceSensitivity,
+  type Action,
+  type AccessContext,
+  type Obligation,
+  type PolicyDecisionConfig,
+  type AbacMiddlewareConfig,
+  ResourceSensitivitySchema,
+  ActionSchema,
+  ResourceDescriptorSchema,
+  AccessContextSchema,
+  ObligationSchema,
+  PolicyDecisionEngine,
+  canAccess,
+  abacMiddleware,
+} from './abac.js';
+
+// WorkOS Audit Log Events
+export {
+  type AuditEventType,
+  type AuditActor,
+  type AuditTarget,
+  type AuditEvent,
+  type AuditEmitterConfig,
+  AUDIT_EVENT_TYPES,
+  AuditActorSchema,
+  AuditTargetSchema,
+  AuditEventSchema,
+  buildActor,
+  buildSystemActor,
+  buildTarget,
+  createAuditEvent,
+  createAuditEvents,
+  phiAccessEvent,
+  lmnEvent,
+  encounterEvent,
+  complianceEvent,
+} from './audit-events.js';

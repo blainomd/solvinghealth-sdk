@@ -58,7 +58,7 @@ export const AccessContextSchema = z.object({
   timestamp: z.string().datetime().optional(),
   ipAddress: z.string().optional(),
   deviceType: z.enum(['desktop', 'mobile', 'tablet', 'api']).optional(),
-  sessionDurationSeconds: z.number().int().nonneg().optional(),
+  sessionDurationSeconds: z.number().int().nonnegative().optional(),
   ipAllowlist: z.array(z.string()).optional(),
 });
 

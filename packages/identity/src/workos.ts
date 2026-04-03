@@ -15,7 +15,6 @@
 import { z } from 'zod';
 import { WorkOS } from '@workos-inc/node';
 import type {
-  canAccess as canAccessFn,
   WorkOSConfig,
   SolvingHealthRole,
   WorkOSUser,
@@ -280,17 +279,8 @@ export async function handleCallback(code: string): Promise<CallbackResult> {
 export async function getUserProfile(accessToken: string): Promise<WorkOSUser> {
   const workos = getWorkOSClient();
 
-  // Verify and decode the JWT session
-  const { user: sessionUser } = await workos.userManagement.getJwksUrl(
-    requireConfig().clientId,
-  ).then(() =>
-    // Use loadSealedSession or similar — for now, list user by auth header
-    workos.userManagement.getUser(accessToken),
-  ).catch(async () => {
-    // Fallback: treat accessToken as user ID for direct lookup
-    const u = await workos.userManagement.getUser(accessToken);
-    return { user: u };
-  });
+  // Look up the user — treat accessToken as user ID for direct lookup
+  const sessionUser = await workos.userManagement.getUser(accessToken);
 
   const orgMemberships = await workos.userManagement.listOrganizationMemberships({
     userId: sessionUser.id,

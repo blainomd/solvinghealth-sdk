@@ -255,6 +255,9 @@ export async function createAuditEvent(
         metadata: t.metadata,
       })),
       version: validated.version ?? config?.defaultVersion ?? 1,
+      context: {
+        location: '0.0.0.0',
+      },
       metadata: validated.metadata as Record<string, string> | undefined,
     });
   } catch (error) {

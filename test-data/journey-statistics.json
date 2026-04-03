@@ -1,0 +1,184 @@
+{
+  "generatedAt": "2026-04-03T00:00:00Z",
+  "totalPatients": 200,
+  "pathways": {
+    "surgical": {
+      "count": 85,
+      "percentage": 0.425
+    },
+    "nonSurgical": {
+      "count": 115,
+      "percentage": 0.575
+    }
+  },
+  "revenuePerPatient": {
+    "overall": 1738,
+    "surgical": 1895,
+    "nonSurgical": 1622
+  },
+  "mcidAchievementByRegion": {
+    "knee": {
+      "total": 53,
+      "achieved": 45,
+      "rate": 0.849
+    },
+    "hip": {
+      "total": 50,
+      "achieved": 45,
+      "rate": 0.9
+    },
+    "spine": {
+      "total": 36,
+      "achieved": 34,
+      "rate": 0.944
+    },
+    "shoulder": {
+      "total": 25,
+      "achieved": 24,
+      "rate": 0.96
+    },
+    "ankle": {
+      "total": 14,
+      "achieved": 6,
+      "rate": 0.429
+    },
+    "wrist": {
+      "total": 12,
+      "achieved": 11,
+      "rate": 0.917
+    },
+    "elbow": {
+      "total": 10,
+      "achieved": 7,
+      "rate": 0.7
+    }
+  },
+  "overallMCIDRate": 0.86,
+  "communityResources": {
+    "patientsWithResources": 139,
+    "averageResourcesPerNonSurgical": 2.18,
+    "mostCommon": [
+      {
+        "type": "physical_therapy",
+        "count": 35
+      },
+      {
+        "type": "yoga",
+        "count": 32
+      },
+      {
+        "type": "fitness",
+        "count": 29
+      },
+      {
+        "type": "aquatic_therapy",
+        "count": 25
+      },
+      {
+        "type": "gym",
+        "count": 22
+      },
+      {
+        "type": "tai_chi",
+        "count": 20
+      },
+      {
+        "type": "anti_inflammatory_cooking",
+        "count": 19
+      },
+      {
+        "type": "swimming",
+        "count": 17
+      },
+      {
+        "type": "ergonomic_equipment",
+        "count": 16
+      },
+      {
+        "type": "cbt_pain",
+        "count": 14
+      },
+      {
+        "type": "meditation",
+        "count": 13
+      },
+      {
+        "type": "bodywork",
+        "count": 13
+      },
+      {
+        "type": "home_exercise",
+        "count": 13
+      },
+      {
+        "type": "acupuncture",
+        "count": 13
+      },
+      {
+        "type": "massage",
+        "count": 13
+      },
+      {
+        "type": "fall_prevention",
+        "count": 12
+      },
+      {
+        "type": "pilates",
+        "count": 11
+      },
+      {
+        "type": "chiropractic",
+        "count": 11
+      },
+      {
+        "type": "climbing",
+        "count": 11
+      },
+      {
+        "type": "walking_group",
+        "count": 10
+      },
+      {
+        "type": "nutrition_counseling",
+        "count": 8
+      }
+    ]
+  },
+  "wearableAdoption": {
+    "count": 101,
+    "rate": 0.505,
+    "byDevice": {
+      "oura": 30,
+      "apple_watch": 24,
+      "whoop": 29,
+      "fitbit": 18
+    }
+  },
+  "bodyRegionDistribution": {
+    "knee": 53,
+    "hip": 50,
+    "spine": 36,
+    "shoulder": 25,
+    "ankle": 14,
+    "wrist": 12,
+    "elbow": 10
+  },
+  "insuranceDistribution": {
+    "Medicare": 77,
+    "Medicare Advantage": 44,
+    "Commercial": 79
+  },
+  "ageDistribution": {
+    "mean": 66.2,
+    "min": 47,
+    "max": 85,
+    "over65": 117
+  },
+  "financialSummary": {
+    "totalAnnualRevenue": 347631,
+    "totalPatientHSASavings": 117982,
+    "totalMedicareAvoidedCosts": 4408487,
+    "avoidedSurgeries": 87,
+    "averageSatisfaction": 8.1
+  }
+}

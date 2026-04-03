@@ -468,6 +468,10 @@ export function quickEstimate(
     currentCodes: [],
     chronicPercentage: SPECIALTY_PROFILES[specialty].defaultChronicPct,
     mskPercentage: SPECIALTY_PROFILES[specialty].defaultMSKPct,
+    monthlyDischarges: 0,
+    isACCESSProvider: false,
+    accessPercentage: 0,
+    isMember: false,
   });
 
   return {

@@ -12,12 +12,11 @@
 
 import { z } from 'zod';
 import {
-  type InstrumentDefinition,
   type InstrumentItem,
   getInstrument,
 } from './instruments.js';
 import {
-  type SurveySession,
+  SurveySessionSchema,
   createSession,
   recordResponse,
   getNextItem,
@@ -93,7 +92,7 @@ export type BridgingStudyRecord = z.infer<typeof BridgingStudyRecordSchema>;
 
 export const VoicePROMSessionSchema = z.object({
   /** Underlying survey session */
-  session: SurveySession,
+  session: SurveySessionSchema,
   /** Voice response mappings */
   voiceMappings: z.array(VoiceResponseMappingSchema),
   /** Bridging study records (if participating in validation study) */
@@ -123,25 +122,6 @@ const SEVERITY_KEYWORDS: ReadonlyMap<string, number> = new Map([
   ['severe', 3], ['bad', 3], ['a lot', 3], ['quite a bit', 3], ['considerable', 3], ['frequently', 3],
   ['extreme', 4], ['terrible', 4], ['worst', 4], ['unbearable', 4], ['always', 4], ['constant', 4], ['completely', 4],
 ]);
-
-/**
- * Numeric scale keywords (for "rate 0-10" style questions).
- */
-const NUMERIC_PATTERNS: ReadonlyArray<{ pattern: RegExp; value: number }> = [
-  { pattern: /\b10\b/, value: 10 },
-  { pattern: /\b[0-9]\b/, value: -1 }, // placeholder — extract actual number
-  { pattern: /zero/i, value: 0 },
-  { pattern: /one/i, value: 1 },
-  { pattern: /two/i, value: 2 },
-  { pattern: /three/i, value: 3 },
-  { pattern: /four/i, value: 4 },
-  { pattern: /five/i, value: 5 },
-  { pattern: /six/i, value: 6 },
-  { pattern: /seven/i, value: 7 },
-  { pattern: /eight/i, value: 8 },
-  { pattern: /nine/i, value: 9 },
-  { pattern: /ten/i, value: 10 },
-];
 
 /**
  * Map a natural language response to a structured score.

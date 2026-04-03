@@ -10,7 +10,7 @@
  */
 
 import { z } from 'zod';
-import { BILLING_CODES, getPaymentDollars } from './codes.js';
+import { BILLING_CODES } from './codes.js';
 
 // ---------------------------------------------------------------------------
 // Schemas

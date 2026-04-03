@@ -11,10 +11,7 @@
 
 import { z } from 'zod';
 import {
-  type BillingCode,
   BILLING_CODES,
-  COMPATIBILITY_RULES,
-  type CodeCategory,
   getPaymentDollars,
 } from './codes.js';
 

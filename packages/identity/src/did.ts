@@ -456,7 +456,7 @@ export function verifyCredential(credential: VerifiableCredential): Verification
  * @param didDocument - DID document to anchor
  * @returns Anchoring result (placeholder)
  */
-export function anchorToBaseL2(didDocument: DIDDocument): {
+export function anchorToBaseL2(_didDocument: DIDDocument): {
   status: 'not_implemented';
   message: string;
   plannedPhase: string;

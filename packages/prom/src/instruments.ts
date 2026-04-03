@@ -30,7 +30,7 @@ export const InstrumentItemSchema = z.object({
   /** Response options (ordered from best to worst unless reverseScored) */
   options: z.array(ResponseOptionSchema).min(2),
   /** Whether this item is reverse-scored */
-  reverseScored: z.boolean().default(false),
+  reverseScored: z.boolean().optional(),
   /** Domain/subscale this item belongs to */
   domain: z.string().optional(),
   /** Skip logic: only show if referenced item has this response */
@@ -108,7 +108,7 @@ function scoreJointReplacementShort(responses: Record<string, number>, itemCount
  * Score a disability index (ODI/NDI) — percentage scale.
  * Raw sum / (max possible) * 100.
  */
-function scoreDisabilityIndex(responses: Record<string, number>, itemCount: number): number {
+function scoreDisabilityIndex(responses: Record<string, number>, _itemCount: number): number {
   const values = Object.values(responses);
   const answered = values.length;
   if (answered === 0) throw new Error('No responses provided');
@@ -402,7 +402,8 @@ export function getInstrument(id: string): InstrumentDefinition {
  * @returns Computed score
  */
 export function scoreInstrument(instrumentId: string, responses: Record<string, number>): number {
-  const instrument = getInstrument(instrumentId);
+  // Validate instrument exists
+  getInstrument(instrumentId);
 
   switch (instrumentId) {
     case 'KOOS_JR':

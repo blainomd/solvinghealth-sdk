@@ -9,7 +9,6 @@
 
 import { z } from 'zod';
 import {
-  type InstrumentDefinition,
   getInstrument,
   interpretScore,
   isClinicallySignificant,

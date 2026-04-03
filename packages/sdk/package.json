@@ -1,8 +1,9 @@
 {
-  "name": "@solvinghealth/clinical",
+  "name": "@solvinghealth/sdk",
   "version": "0.1.0",
-  "description": "Proprietary clinical AI harness with physician oversight, compliance validation, and agentic memory",
-  "license": "SEE LICENSE",
+  "description": "SolvingHealth SDK — unified re-export of all packages (FHIR, HIPAA, Clinical, Billing, PROM, Identity)",
+  "license": "UNLICENSED",
+  "private": true,
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -22,9 +23,9 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@solvinghealth/hipaa": "0.1.0",
-    "@solvinghealth/fhir": "0.1.0",
-    "zod": "^3.23.0"
+    "@solvinghealth/billing": "0.1.0",
+    "@solvinghealth/prom": "0.1.0",
+    "@solvinghealth/identity": "0.1.0"
   },
   "devDependencies": {
     "tsup": "^8.0.0",

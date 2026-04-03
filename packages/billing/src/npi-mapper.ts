@@ -9,7 +9,7 @@
  */
 
 import { z } from 'zod';
-import { type BillingCode, BILLING_CODES, type CodeCategory } from './codes.js';
+import { BILLING_CODES, type CodeCategory } from './codes.js';
 
 // ---------------------------------------------------------------------------
 // Schemas

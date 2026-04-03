@@ -10,7 +10,6 @@
 
 import { z } from 'zod';
 import {
-  type InstrumentDefinition,
   type InstrumentItem,
   getInstrument,
   scoreInstrument,

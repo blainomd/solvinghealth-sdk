@@ -1,0 +1,34 @@
+{
+  "name": "@solvinghealth/clinical",
+  "version": "0.1.0",
+  "description": "Proprietary clinical AI harness with physician oversight, compliance validation, and agentic memory",
+  "license": "SEE LICENSE",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@solvinghealth/hipaa": "workspace:*",
+    "@solvinghealth/fhir": "workspace:*",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}

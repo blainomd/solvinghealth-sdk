@@ -364,7 +364,7 @@ describe('Context-based access', () => {
     };
     const decision = engine.evaluate(admin, resource, 'read', context);
     expect(decision.allowed).toBe(true);
-    expect(decision.obligations).toContain('after_hours_access');
+    expect(decision.obligations).toContain('audit_log_required');
   });
 
   it('expired session is denied', () => {

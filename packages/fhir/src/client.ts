@@ -5,7 +5,7 @@
  * batch/transaction support, and configurable authentication.
  *
  * @module @solvinghealth/fhir/client
- * @license MIT
+ * @license Apache-2.0
  */
 
 import type {

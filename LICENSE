@@ -1,0 +1,18 @@
+SolvingHealth SDK: licensing by package
+
+This repository holds packages under different terms. Each package
+directory contains its own LICENSE file, and that file governs the
+package.
+
+  packages/fhir       Apache License 2.0
+  packages/hipaa      Apache License 2.0
+  packages/identity   Apache License 2.0
+  packages/prom       Apache License 2.0 (the code only; see NOTICE)
+  packages/billing    Proprietary, all rights reserved
+  packages/clinical   Proprietary, all rights reserved
+  packages/sdk        Proprietary, all rights reserved
+
+Everything else in this repository (root configuration, test data and
+documentation) is proprietary unless a file says otherwise.
+
+Copyright 2026 Blaine Warkentine.

@@ -6,7 +6,7 @@
  *
  * @packageDocumentation
  * @module @solvinghealth/fhir
- * @license MIT
+ * @license Apache-2.0
  */
 
 // Core types and Zod schemas

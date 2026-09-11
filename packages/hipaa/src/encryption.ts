@@ -9,7 +9,7 @@
  * only the DEK envelopes need re-encryption when rotating the KEK.
  *
  * @module @solvinghealth/hipaa/encryption
- * @license MIT
+ * @license Apache-2.0
  */
 
 import {

@@ -2,7 +2,7 @@
   "name": "@solvinghealth/clinical",
   "version": "0.1.0",
   "description": "Proprietary clinical AI harness with physician oversight, compliance validation, and agentic memory",
-  "license": "SEE LICENSE",
+  "license": "UNLICENSED",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

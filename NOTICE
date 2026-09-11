@@ -1,0 +1,27 @@
+SolvingHealth SDK
+Copyright 2026 Blaine Warkentine
+
+The packages in packages/fhir, packages/hipaa, packages/identity and
+packages/prom are licensed under the Apache License, Version 2.0. The
+packages in packages/billing, packages/clinical and packages/sdk are
+proprietary. See LICENSE.
+
+Patient-reported outcome instruments
+------------------------------------
+@solvinghealth/prom works with these instruments: KOOS JR, HOOS JR, the
+Oswestry Disability Index (ODI), the Neck Disability Index (NDI),
+QuickDASH and PROMIS-10 Global Health. The instruments, including the
+wording of their items and response options, belong to their copyright
+holders. They are not covered by the Apache License, and this package
+does not include their wording.
+
+The package provides item structure, response values, scoring,
+normative ranges and MCID thresholds. Obtain each instrument's wording,
+and any permission or license its owner requires (commercial use often
+requires one), from the owner, then load it with
+registerInstrumentWording().
+
+Scoring: KOOS JR and HOOS JR scores use a linear approximation of the
+published interval-score conversion, and PROMIS-10 uses a simplified
+T-score estimate instead of the official IRT-derived tables. Do not
+report these as official instrument scores.

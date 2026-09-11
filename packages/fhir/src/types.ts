@@ -7,7 +7,7 @@
  * Encounter, Condition, Procedure, DocumentReference, and ServiceRequest.
  *
  * @module @solvinghealth/fhir/types
- * @license MIT
+ * @license Apache-2.0
  */
 
 import { z } from 'zod';

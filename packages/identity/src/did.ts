@@ -7,7 +7,7 @@
  *
  * Follows W3C DID Core v1.0 and Verifiable Credentials Data Model v2.0.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';

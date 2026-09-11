@@ -6,7 +6,7 @@
  *
  * @see https://docs.athenahealth.com/api/guides/fhir-overview
  * @module @solvinghealth/fhir/connectors/athena
- * @license MIT
+ * @license Apache-2.0
  */
 
 import type { FHIRClientConfig } from '../types.js';

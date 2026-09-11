@@ -7,7 +7,7 @@
  *
  * @packageDocumentation
  * @module @solvinghealth/hipaa
- * @license MIT
+ * @license Apache-2.0
  */
 
 // PHI Detection

@@ -9,7 +9,7 @@
  * - Configurable request/response interceptors
  *
  * @module @solvinghealth/hipaa/transport
- * @license MIT
+ * @license Apache-2.0
  */
 
 import { z } from 'zod';

@@ -8,7 +8,7 @@
  * Integration point for Proof API (identity verification).
  * Target: 35-40 states with clear RON legislation.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';

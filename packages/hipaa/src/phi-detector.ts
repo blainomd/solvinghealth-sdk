@@ -9,7 +9,7 @@
  * 2. Post-LLM scanning: verify AI output does not contain PHI
  *
  * @module @solvinghealth/hipaa/phi-detector
- * @license MIT
+ * @license Apache-2.0
  */
 
 import { z } from 'zod';

@@ -13,7 +13,7 @@
  * CMS requires 7 years for Medicare-related records.
  *
  * @module @solvinghealth/hipaa/audit-log
- * @license MIT
+ * @license Apache-2.0
  */
 
 import { createHash, randomUUID } from 'node:crypto';

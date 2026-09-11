@@ -2,7 +2,7 @@
   "name": "@solvinghealth/hipaa",
   "version": "0.1.0",
   "description": "HIPAA-compliant PHI detection, audit logging, encryption, and transport",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

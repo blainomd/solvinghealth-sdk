@@ -9,7 +9,7 @@
  *
  * @see https://fhir.epic.com/Documentation?docId=oauth2
  * @module @solvinghealth/fhir/connectors/epic
- * @license MIT
+ * @license Apache-2.0
  */
 
 import type { FHIRClientConfig } from '../types.js';

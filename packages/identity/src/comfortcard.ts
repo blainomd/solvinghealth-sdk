@@ -7,7 +7,7 @@
  *
  * ComfortCard is a wallet tab inside the co-op.care app — not a separate site.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';

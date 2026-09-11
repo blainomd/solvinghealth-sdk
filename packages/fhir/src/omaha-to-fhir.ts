@@ -11,7 +11,7 @@
  *
  * @see https://www.omahasystem.org/
  * @module @solvinghealth/fhir/omaha-to-fhir
- * @license MIT
+ * @license Apache-2.0
  */
 
 import type { Condition, Observation } from './types.js';

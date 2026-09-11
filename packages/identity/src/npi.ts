@@ -5,7 +5,7 @@
  * credential verification status tracking, and credential tier system
  * for the SolvingHealth physician network.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';

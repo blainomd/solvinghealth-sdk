@@ -5,7 +5,7 @@
  * ComfortCard digital identity, W3C DID, Remote Online Notarization,
  * WorkOS AuthKit integration, ABAC policy engine, and audit logging.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 // NPI Identity

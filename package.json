@@ -1,6 +1,8 @@
 {
   "name": "solvinghealth-sdk",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "packageManager": "npm@10.9.2",
   "workspaces": ["packages/*"],
   "scripts": {
     "build": "turbo build",

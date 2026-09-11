@@ -1,11 +1,18 @@
 /**
  * @solvinghealth/prom — PROM Instrument Definitions
  *
- * Validated Patient-Reported Outcome Measure instruments used in
- * orthopedic and general health assessment. Each instrument includes
- * questions, scoring algorithms, normative ranges, and MCID thresholds.
+ * Structure and scoring for validated patient-reported outcome measures used
+ * in orthopedic and general health assessment: item ids, response values,
+ * domains, scoring, normative ranges and MCID thresholds.
  *
- * MIT License
+ * The instruments belong to their copyright holders. This package does NOT
+ * ship their wording (item text or response-option text); load a copy you
+ * are licensed to use with registerInstrumentWording(). See NOTICE.
+ *
+ * KOOS JR / HOOS JR and PROMIS-10 scores here approximate the official
+ * conversions. Do not report them as official instrument scores.
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';
@@ -15,7 +22,8 @@ import { z } from 'zod';
 // ---------------------------------------------------------------------------
 
 export const ResponseOptionSchema = z.object({
-  label: z.string(),
+  /** Response-option wording: not shipped (see NOTICE); set by registerInstrumentWording() */
+  label: z.string().optional(),
   value: z.number(),
 });
 export type ResponseOption = z.infer<typeof ResponseOptionSchema>;
@@ -25,8 +33,8 @@ export const InstrumentItemSchema = z.object({
   id: z.string(),
   /** Item number (display order) */
   number: z.number().int().positive(),
-  /** Question text */
-  text: z.string(),
+  /** Question wording: not shipped (see NOTICE); set by registerInstrumentWording() */
+  text: z.string().optional(),
   /** Response options (ordered from best to worst unless reverseScored) */
   options: z.array(ResponseOptionSchema).min(2),
   /** Whether this item is reverse-scored */
@@ -161,13 +169,13 @@ export const KOOS_JR: InstrumentDefinition = {
   version: '1.0',
   bodyRegion: 'Knee',
   items: [
-    { id: 'kj1', number: 1, text: 'How often are you aware of your knee problem?', options: [{ label: 'Never', value: 0 }, { label: 'Monthly', value: 1 }, { label: 'Weekly', value: 2 }, { label: 'Daily', value: 3 }, { label: 'Always', value: 4 }], domain: 'Awareness' },
-    { id: 'kj2', number: 2, text: 'Have you modified your lifestyle to avoid activities potentially damaging to your knee?', options: [{ label: 'Not at all', value: 0 }, { label: 'Mildly', value: 1 }, { label: 'Moderately', value: 2 }, { label: 'Severely', value: 3 }, { label: 'Totally', value: 4 }], domain: 'Lifestyle' },
-    { id: 'kj3', number: 3, text: 'How much are you troubled with lack of confidence in your knee?', options: [{ label: 'Not at all', value: 0 }, { label: 'Mildly', value: 1 }, { label: 'Moderately', value: 2 }, { label: 'Severely', value: 3 }, { label: 'Extremely', value: 4 }], domain: 'Confidence' },
-    { id: 'kj4', number: 4, text: 'In general, how much difficulty do you have with your knee?', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Difficulty' },
-    { id: 'kj5', number: 5, text: 'Difficulty rising from sitting', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Function' },
-    { id: 'kj6', number: 6, text: 'Difficulty bending to floor/picking up an object', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Function' },
-    { id: 'kj7', number: 7, text: 'Difficulty twisting/pivoting on your knee', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Function' },
+    { id: 'kj1', number: 1, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Awareness' },
+    { id: 'kj2', number: 2, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Lifestyle' },
+    { id: 'kj3', number: 3, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Confidence' },
+    { id: 'kj4', number: 4, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Difficulty' },
+    { id: 'kj5', number: 5, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Function' },
+    { id: 'kj6', number: 6, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Function' },
+    { id: 'kj7', number: 7, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Function' },
   ],
   scoreRange: { min: 0, max: 100 },
   higherIsBetter: true,
@@ -193,12 +201,12 @@ export const HOOS_JR: InstrumentDefinition = {
   version: '1.0',
   bodyRegion: 'Hip',
   items: [
-    { id: 'hj1', number: 1, text: 'Groin or hip pain during the last week', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Pain' },
-    { id: 'hj2', number: 2, text: 'Pain going up or down stairs', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Pain' },
-    { id: 'hj3', number: 3, text: 'Difficulty with sitting', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Function' },
-    { id: 'hj4', number: 4, text: 'Difficulty running', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Function' },
-    { id: 'hj5', number: 5, text: 'Difficulty twisting/pivoting on loaded leg', options: [{ label: 'None', value: 0 }, { label: 'Mild', value: 1 }, { label: 'Moderate', value: 2 }, { label: 'Severe', value: 3 }, { label: 'Extreme', value: 4 }], domain: 'Function' },
-    { id: 'hj6', number: 6, text: 'Awareness of hip problem', options: [{ label: 'Never', value: 0 }, { label: 'Monthly', value: 1 }, { label: 'Weekly', value: 2 }, { label: 'Daily', value: 3 }, { label: 'Always', value: 4 }], domain: 'Awareness' },
+    { id: 'hj1', number: 1, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Pain' },
+    { id: 'hj2', number: 2, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Pain' },
+    { id: 'hj3', number: 3, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Function' },
+    { id: 'hj4', number: 4, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Function' },
+    { id: 'hj5', number: 5, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Function' },
+    { id: 'hj6', number: 6, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }], domain: 'Awareness' },
   ],
   scoreRange: { min: 0, max: 100 },
   higherIsBetter: true,
@@ -224,16 +232,16 @@ export const ODI: InstrumentDefinition = {
   version: '2.1a',
   bodyRegion: 'Lumbar Spine',
   items: [
-    { id: 'odi1', number: 1, text: 'Pain Intensity', options: [{ label: 'I have no pain at the moment', value: 0 }, { label: 'The pain is very mild', value: 1 }, { label: 'The pain is moderate', value: 2 }, { label: 'The pain is fairly severe', value: 3 }, { label: 'The pain is very severe', value: 4 }, { label: 'The pain is the worst imaginable', value: 5 }], domain: 'Pain' },
-    { id: 'odi2', number: 2, text: 'Personal Care (Washing, Dressing)', options: [{ label: 'I can look after myself without causing extra pain', value: 0 }, { label: 'I can look after myself but it causes extra pain', value: 1 }, { label: 'It is painful and I am slow and careful', value: 2 }, { label: 'I need some help but manage most of my care', value: 3 }, { label: 'I need help every day in most aspects', value: 4 }, { label: 'I do not get dressed and wash with difficulty', value: 5 }], domain: 'ADL' },
-    { id: 'odi3', number: 3, text: 'Lifting', options: [{ label: 'I can lift heavy weights without extra pain', value: 0 }, { label: 'I can lift heavy weights but it gives extra pain', value: 1 }, { label: 'Pain prevents me from lifting heavy weights', value: 2 }, { label: 'Pain prevents me from lifting heavy weights but I can manage light/medium', value: 3 }, { label: 'I can lift only very light weights', value: 4 }, { label: 'I cannot lift or carry anything at all', value: 5 }], domain: 'Function' },
-    { id: 'odi4', number: 4, text: 'Walking', options: [{ label: 'Pain does not prevent me walking any distance', value: 0 }, { label: 'Pain prevents me from walking more than 1 mile', value: 1 }, { label: 'Pain prevents me from walking more than 1/2 mile', value: 2 }, { label: 'Pain prevents me from walking more than 100 yards', value: 3 }, { label: 'I can only walk using a stick or crutches', value: 4 }, { label: 'I am in bed most of the time', value: 5 }], domain: 'Function' },
-    { id: 'odi5', number: 5, text: 'Sitting', options: [{ label: 'I can sit in any chair as long as I like', value: 0 }, { label: 'I can only sit in my favorite chair as long as I like', value: 1 }, { label: 'Pain prevents me sitting more than 1 hour', value: 2 }, { label: 'Pain prevents me from sitting more than 30 minutes', value: 3 }, { label: 'Pain prevents me from sitting more than 10 minutes', value: 4 }, { label: 'Pain prevents me from sitting at all', value: 5 }], domain: 'Function' },
-    { id: 'odi6', number: 6, text: 'Standing', options: [{ label: 'I can stand as long as I want without extra pain', value: 0 }, { label: 'I can stand as long as I want but it gives extra pain', value: 1 }, { label: 'Pain prevents me from standing more than 1 hour', value: 2 }, { label: 'Pain prevents me from standing more than 30 minutes', value: 3 }, { label: 'Pain prevents me from standing more than 10 minutes', value: 4 }, { label: 'Pain prevents me from standing at all', value: 5 }], domain: 'Function' },
-    { id: 'odi7', number: 7, text: 'Sleeping', options: [{ label: 'My sleep is never disturbed by pain', value: 0 }, { label: 'My sleep is occasionally disturbed', value: 1 }, { label: 'I get less than 6 hours sleep because of pain', value: 2 }, { label: 'I get less than 4 hours sleep because of pain', value: 3 }, { label: 'I get less than 2 hours sleep because of pain', value: 4 }, { label: 'Pain prevents me from sleeping at all', value: 5 }], domain: 'Sleep' },
-    { id: 'odi8', number: 8, text: 'Social Life', options: [{ label: 'My social life is normal and gives no extra pain', value: 0 }, { label: 'My social life is normal but increases pain', value: 1 }, { label: 'Pain reduces my more energetic interests', value: 2 }, { label: 'Pain has restricted my social life to home', value: 3 }, { label: 'Pain has restricted social life to home', value: 4 }, { label: 'I have no social life because of pain', value: 5 }], domain: 'Social' },
-    { id: 'odi9', number: 9, text: 'Traveling', options: [{ label: 'I can travel anywhere without pain', value: 0 }, { label: 'I can travel anywhere but it gives extra pain', value: 1 }, { label: 'Pain is bad but I manage journeys over 2 hours', value: 2 }, { label: 'Pain restricts me to journeys of less than 1 hour', value: 3 }, { label: 'Pain restricts me to short necessary journeys under 30 min', value: 4 }, { label: 'Pain prevents me from traveling except for treatment', value: 5 }], domain: 'Travel' },
-    { id: 'odi10', number: 10, text: 'Employment/Homemaking', options: [{ label: 'My normal homemaking/job activities do not cause extra pain', value: 0 }, { label: 'My work causes extra pain but I can still do all that is required', value: 1 }, { label: 'I can do most of my work but pain prevents more demanding', value: 2 }, { label: 'Pain prevents me from doing anything but light duties', value: 3 }, { label: 'Pain prevents me from doing even light duties', value: 4 }, { label: 'Pain prevents me from doing any job at all', value: 5 }], domain: 'Work' },
+    { id: 'odi1', number: 1, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Pain' },
+    { id: 'odi2', number: 2, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'ADL' },
+    { id: 'odi3', number: 3, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Function' },
+    { id: 'odi4', number: 4, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Function' },
+    { id: 'odi5', number: 5, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Function' },
+    { id: 'odi6', number: 6, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Function' },
+    { id: 'odi7', number: 7, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Sleep' },
+    { id: 'odi8', number: 8, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Social' },
+    { id: 'odi9', number: 9, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Travel' },
+    { id: 'odi10', number: 10, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Work' },
   ],
   scoreRange: { min: 0, max: 100 },
   higherIsBetter: false,
@@ -260,16 +268,16 @@ export const NDI: InstrumentDefinition = {
   version: '1.0',
   bodyRegion: 'Cervical Spine',
   items: [
-    { id: 'ndi1', number: 1, text: 'Pain Intensity', options: [{ label: 'I have no pain at the moment', value: 0 }, { label: 'The pain is very mild', value: 1 }, { label: 'The pain is moderate', value: 2 }, { label: 'The pain is fairly severe', value: 3 }, { label: 'The pain is very severe', value: 4 }, { label: 'The pain is the worst imaginable', value: 5 }], domain: 'Pain' },
-    { id: 'ndi2', number: 2, text: 'Personal Care', options: [{ label: 'I can look after myself without causing extra pain', value: 0 }, { label: 'I can look after myself but it causes extra pain', value: 1 }, { label: 'It is painful and I am slow and careful', value: 2 }, { label: 'I need some help but manage most', value: 3 }, { label: 'I need help every day in most aspects', value: 4 }, { label: 'I do not get dressed, wash with difficulty', value: 5 }], domain: 'ADL' },
-    { id: 'ndi3', number: 3, text: 'Lifting', options: [{ label: 'I can lift heavy weights without extra pain', value: 0 }, { label: 'I can lift heavy weights but it causes pain', value: 1 }, { label: 'Pain prevents heavy weights off the floor', value: 2 }, { label: 'Pain prevents heavy weights but I can manage light/medium from convenient position', value: 3 }, { label: 'I can lift only very light weights', value: 4 }, { label: 'I cannot lift or carry anything', value: 5 }], domain: 'Function' },
-    { id: 'ndi4', number: 4, text: 'Reading', options: [{ label: 'I can read as much as I want with no neck pain', value: 0 }, { label: 'I can read as much as I want with slight pain', value: 1 }, { label: 'I can read as much as I want with moderate pain', value: 2 }, { label: 'I cannot read as much as I want because of moderate pain', value: 3 }, { label: 'I can hardly read at all because of severe pain', value: 4 }, { label: 'I cannot read at all', value: 5 }], domain: 'Function' },
-    { id: 'ndi5', number: 5, text: 'Headaches', options: [{ label: 'I have no headaches at all', value: 0 }, { label: 'Slight headaches which come infrequently', value: 1 }, { label: 'Moderate headaches infrequently', value: 2 }, { label: 'Moderate headaches frequently', value: 3 }, { label: 'Severe headaches frequently', value: 4 }, { label: 'I have headaches almost all the time', value: 5 }], domain: 'Pain' },
-    { id: 'ndi6', number: 6, text: 'Concentration', options: [{ label: 'I can concentrate fully when I want without difficulty', value: 0 }, { label: 'I can concentrate fully with slight difficulty', value: 1 }, { label: 'I have a fair degree of difficulty concentrating', value: 2 }, { label: 'I have a lot of difficulty concentrating', value: 3 }, { label: 'I have a great deal of difficulty concentrating', value: 4 }, { label: 'I cannot concentrate at all', value: 5 }], domain: 'Cognitive' },
-    { id: 'ndi7', number: 7, text: 'Work', options: [{ label: 'I can do as much work as I want to', value: 0 }, { label: 'I can only do my usual work, but no more', value: 1 }, { label: 'I can do most of my usual work, but no more', value: 2 }, { label: 'I cannot do my usual work', value: 3 }, { label: 'I can hardly do any work at all', value: 4 }, { label: 'I cannot do any work at all', value: 5 }], domain: 'Work' },
-    { id: 'ndi8', number: 8, text: 'Driving', options: [{ label: 'I can drive without any neck pain', value: 0 }, { label: 'I can drive as long as I want with slight pain', value: 1 }, { label: 'I can drive as long as I want with moderate pain', value: 2 }, { label: 'I cannot drive as long as I want because of moderate pain', value: 3 }, { label: 'I can hardly drive at all because of severe pain', value: 4 }, { label: 'I cannot drive at all', value: 5 }], domain: 'Function' },
-    { id: 'ndi9', number: 9, text: 'Sleeping', options: [{ label: 'I have no trouble sleeping', value: 0 }, { label: 'My sleep is slightly disturbed (less than 1 hour)', value: 1 }, { label: 'My sleep is mildly disturbed (1-2 hours)', value: 2 }, { label: 'My sleep is moderately disturbed (2-3 hours)', value: 3 }, { label: 'My sleep is greatly disturbed (3-5 hours)', value: 4 }, { label: 'My sleep is completely disturbed (5-7 hours)', value: 5 }], domain: 'Sleep' },
-    { id: 'ndi10', number: 10, text: 'Recreation', options: [{ label: 'I am able to engage in all recreation activities without neck pain', value: 0 }, { label: 'I am able to engage in all recreation with some neck pain', value: 1 }, { label: 'I am able to engage in most but not all recreation', value: 2 }, { label: 'I am able to engage in a few recreation activities', value: 3 }, { label: 'I can hardly do any recreation activities', value: 4 }, { label: 'I cannot do any recreation activities', value: 5 }], domain: 'Recreation' },
+    { id: 'ndi1', number: 1, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Pain' },
+    { id: 'ndi2', number: 2, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'ADL' },
+    { id: 'ndi3', number: 3, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Function' },
+    { id: 'ndi4', number: 4, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Function' },
+    { id: 'ndi5', number: 5, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Pain' },
+    { id: 'ndi6', number: 6, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Cognitive' },
+    { id: 'ndi7', number: 7, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Work' },
+    { id: 'ndi8', number: 8, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Function' },
+    { id: 'ndi9', number: 9, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Sleep' },
+    { id: 'ndi10', number: 10, options: [{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5 }], domain: 'Recreation' },
   ],
   scoreRange: { min: 0, max: 100 },
   higherIsBetter: false,
@@ -298,25 +306,12 @@ export const QUICK_DASH: InstrumentDefinition = {
   items: Array.from({ length: 11 }, (_, i) => ({
     id: `qd${i + 1}`,
     number: i + 1,
-    text: [
-      'Open a tight or new jar',
-      'Do heavy household chores (e.g., wash walls)',
-      'Carry a shopping bag or briefcase',
-      'Wash your back',
-      'Use a knife to cut food',
-      'Recreational activities with some force (e.g., golf, tennis)',
-      'Arm, shoulder, or hand interfering with normal social activities',
-      'Arm, shoulder, or hand limiting work or regular daily activities',
-      'Severity of arm, shoulder, or hand pain',
-      'Tingling (pins and needles) in your arm, shoulder, or hand',
-      'Difficulty sleeping due to arm, shoulder, or hand pain',
-    ][i]!,
     options: [
-      { label: 'No difficulty / None', value: 1 },
-      { label: 'Mild', value: 2 },
-      { label: 'Moderate', value: 3 },
-      { label: 'Severe', value: 4 },
-      { label: 'Unable / Extreme', value: 5 },
+      { value: 1 },
+      { value: 2 },
+      { value: 3 },
+      { value: 4 },
+      { value: 5 },
     ],
     domain: i < 6 ? 'Function' : i < 8 ? 'Social/Work' : 'Symptoms',
   })),
@@ -344,16 +339,16 @@ export const PROMIS_10: InstrumentDefinition = {
   version: '1.2',
   bodyRegion: 'General',
   items: [
-    { id: 'p1', number: 1, text: 'In general, would you say your health is:', options: [{ label: 'Excellent', value: 5 }, { label: 'Very good', value: 4 }, { label: 'Good', value: 3 }, { label: 'Fair', value: 2 }, { label: 'Poor', value: 1 }], domain: 'Global' },
-    { id: 'p2', number: 2, text: 'In general, would you say your quality of life is:', options: [{ label: 'Excellent', value: 5 }, { label: 'Very good', value: 4 }, { label: 'Good', value: 3 }, { label: 'Fair', value: 2 }, { label: 'Poor', value: 1 }], domain: 'Mental' },
-    { id: 'p3', number: 3, text: 'In general, how would you rate your physical health?', options: [{ label: 'Excellent', value: 5 }, { label: 'Very good', value: 4 }, { label: 'Good', value: 3 }, { label: 'Fair', value: 2 }, { label: 'Poor', value: 1 }], domain: 'Physical' },
-    { id: 'p4', number: 4, text: 'In general, how would you rate your mental health?', options: [{ label: 'Excellent', value: 5 }, { label: 'Very good', value: 4 }, { label: 'Good', value: 3 }, { label: 'Fair', value: 2 }, { label: 'Poor', value: 1 }], domain: 'Mental' },
-    { id: 'p5', number: 5, text: 'In general, how would you rate your satisfaction with social activities?', options: [{ label: 'Excellent', value: 5 }, { label: 'Very good', value: 4 }, { label: 'Good', value: 3 }, { label: 'Fair', value: 2 }, { label: 'Poor', value: 1 }], domain: 'Mental' },
-    { id: 'p6', number: 6, text: 'To what extent are you able to carry out everyday physical activities?', options: [{ label: 'Completely', value: 5 }, { label: 'Mostly', value: 4 }, { label: 'Moderately', value: 3 }, { label: 'A little', value: 2 }, { label: 'Not at all', value: 1 }], domain: 'Physical' },
-    { id: 'p7', number: 7, text: 'How would you rate your pain on average? (0 = no pain, 10 = worst)', options: [{ label: '0 (No pain)', value: 5 }, { label: '1-3', value: 4 }, { label: '4-6', value: 3 }, { label: '7-9', value: 2 }, { label: '10 (Worst)', value: 1 }], domain: 'Physical', reverseScored: true },
-    { id: 'p8', number: 8, text: 'How often have you been bothered by emotional problems (anxiety, depression)?', options: [{ label: 'Never', value: 5 }, { label: 'Rarely', value: 4 }, { label: 'Sometimes', value: 3 }, { label: 'Often', value: 2 }, { label: 'Always', value: 1 }], domain: 'Mental' },
-    { id: 'p9', number: 9, text: 'How would you rate your fatigue on average?', options: [{ label: 'None', value: 5 }, { label: 'Mild', value: 4 }, { label: 'Moderate', value: 3 }, { label: 'Severe', value: 2 }, { label: 'Very severe', value: 1 }], domain: 'Physical' },
-    { id: 'p10', number: 10, text: 'In general, please rate how well you carry out your usual social activities at home and work', options: [{ label: 'Excellent', value: 5 }, { label: 'Very good', value: 4 }, { label: 'Good', value: 3 }, { label: 'Fair', value: 2 }, { label: 'Poor', value: 1 }], domain: 'Mental' },
+    { id: 'p1', number: 1, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Global' },
+    { id: 'p2', number: 2, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Mental' },
+    { id: 'p3', number: 3, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Physical' },
+    { id: 'p4', number: 4, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Mental' },
+    { id: 'p5', number: 5, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Mental' },
+    { id: 'p6', number: 6, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Physical' },
+    { id: 'p7', number: 7, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Physical', reverseScored: true },
+    { id: 'p8', number: 8, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Mental' },
+    { id: 'p9', number: 9, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Physical' },
+    { id: 'p10', number: 10, options: [{ value: 5 }, { value: 4 }, { value: 3 }, { value: 2 }, { value: 1 }], domain: 'Mental' },
   ],
   scoreRange: { min: 20, max: 80 },
   higherIsBetter: true,
@@ -382,12 +377,109 @@ export const INSTRUMENTS: ReadonlyMap<string, InstrumentDefinition> = new Map([
   ['PROMIS_10', PROMIS_10],
 ]);
 
+// ---------------------------------------------------------------------------
+// Instrument Wording (loaded by the implementer)
+// ---------------------------------------------------------------------------
+
+/**
+ * The wording of an instrument's items and response options.
+ *
+ * The instruments belong to their copyright holders. This package ships
+ * structure and scoring only; the wording has to come from a copy you are
+ * licensed to use (see NOTICE).
+ */
+export interface InstrumentWording {
+  /** Item id → wording. Every item in the instrument needs an entry. */
+  items: Record<string, {
+    /** The item's question wording */
+    text: string;
+    /** Response-option wording, in the same order as the item's options */
+    options: string[];
+  }>;
+}
+
+/** Instruments whose licensed wording has been loaded, by instrument ID */
+const WORDED = new Map<string, InstrumentDefinition>();
+
+/**
+ * Return a copy of an instrument with the supplied wording applied.
+ * The shipped definition is not modified.
+ * @throws Error if any item or response option is left without wording
+ */
+export function withInstrumentText(
+  instrument: InstrumentDefinition,
+  wording: InstrumentWording,
+): InstrumentDefinition {
+  const items = instrument.items.map((item) => {
+    const w = wording.items[item.id];
+    if (!w || !w.text.trim()) {
+      throw new Error(`No wording supplied for ${instrument.id} item ${item.id}`);
+    }
+    if (w.options.length !== item.options.length || w.options.some((o) => !o.trim())) {
+      throw new Error(
+        `${instrument.id} item ${item.id} needs ${item.options.length} response-option wordings; got ${w.options.length}`,
+      );
+    }
+    return {
+      ...item,
+      text: w.text,
+      options: item.options.map((o, i) => ({ ...o, label: w.options[i]! })),
+    };
+  });
+  return { ...instrument, items };
+}
+
+/**
+ * Load licensed wording for an instrument. From then on getInstrument() and
+ * everything built on it (sessions, FHIR export, voice prompts) uses it.
+ * @returns The instrument definition with wording applied
+ */
+export function registerInstrumentWording(
+  instrumentId: string,
+  wording: InstrumentWording,
+): InstrumentDefinition {
+  const base = INSTRUMENTS.get(instrumentId);
+  if (!base) throw new Error(`Unknown instrument: ${instrumentId}`);
+  const worded = withInstrumentText(base, wording);
+  WORDED.set(instrumentId, worded);
+  return worded;
+}
+
+/** Forget loaded wording for one instrument, or for all of them. */
+export function clearInstrumentWording(instrumentId?: string): void {
+  if (instrumentId) WORDED.delete(instrumentId);
+  else WORDED.clear();
+}
+
+/** True when every item and response option carries wording. */
+export function hasWording(instrument: InstrumentDefinition): boolean {
+  return instrument.items.every((item) => !!item.text && item.options.every((o) => !!o.label));
+}
+
+/**
+ * The wording for one item, or an error that says how to load it.
+ * @throws Error when the item's wording has not been loaded
+ */
+export function requireWording(
+  item: InstrumentItem,
+  instrumentId: string,
+): { text: string; labels: string[] } {
+  const labels = item.options.map((o) => o.label);
+  if (!item.text || labels.some((l) => !l)) {
+    throw new Error(
+      `${instrumentId} item ${item.id} has no wording loaded. This package does not ship ` +
+        'third-party instrument wording; load a licensed copy with registerInstrumentWording() (see NOTICE).',
+    );
+  }
+  return { text: item.text, labels: labels as string[] };
+}
+
 /**
  * Get an instrument definition by ID.
  * @throws Error if instrument not found
  */
 export function getInstrument(id: string): InstrumentDefinition {
-  const instrument = INSTRUMENTS.get(id);
+  const instrument = WORDED.get(id) ?? INSTRUMENTS.get(id);
   if (!instrument) {
     throw new Error(`Instrument "${id}" not found. Available: ${Array.from(INSTRUMENTS.keys()).join(', ')}`);
   }

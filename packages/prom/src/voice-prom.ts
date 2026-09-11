@@ -7,13 +7,14 @@
  *
  * Integration point for PGA (Pretty Good AI).
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';
 import {
   type InstrumentItem,
   getInstrument,
+  requireWording,
 } from './instruments.js';
 import {
   SurveySessionSchema,
@@ -146,9 +147,10 @@ export function mapNaturalLanguageResponse(
   const alternatives: Array<{ value: number; confidence: number; rationale: string }> = [];
   let bestMatch: { value: number; confidence: number } | null = null;
 
-  // Strategy 1: Exact option label match
+  // Strategy 1: Exact option label match (only when licensed wording is loaded)
   for (const option of item.options) {
-    if (input === option.label.toLowerCase() || input.includes(option.label.toLowerCase())) {
+    const label = option.label?.toLowerCase();
+    if (label && (input === label || input.includes(label))) {
       bestMatch = { value: option.value, confidence: 0.95 };
       break;
     }
@@ -234,30 +236,33 @@ export function generateConversationalPrompt(
 ): ConversationalPrompt {
   const bodyRegion = getInstrument(instrumentId).bodyRegion.toLowerCase();
 
+  // Licensed wording has to be loaded first (registerInstrumentWording); this package ships none.
+  const { text, labels } = requireWording(item, instrumentId);
+
   // Map clinical language to conversational language
-  let conversationalText = item.text;
+  let conversationalText = text;
 
   // Common transformations
-  if (item.text.toLowerCase().includes('difficulty')) {
-    conversationalText = `How much trouble do you have with ${item.text.toLowerCase().replace('difficulty ', '').replace('difficulty with ', '')}?`;
-  } else if (item.text.toLowerCase().includes('pain')) {
-    conversationalText = `Tell me about your ${bodyRegion} pain — ${item.text.toLowerCase()}`;
-  } else if (item.text.toLowerCase().includes('how often')) {
-    conversationalText = item.text;
+  if (text.toLowerCase().includes('difficulty')) {
+    conversationalText = `How much trouble do you have with ${text.toLowerCase().replace('difficulty ', '').replace('difficulty with ', '')}?`;
+  } else if (text.toLowerCase().includes('pain')) {
+    conversationalText = `Tell me about your ${bodyRegion} pain — ${text.toLowerCase()}`;
+  } else if (text.toLowerCase().includes('how often')) {
+    conversationalText = text;
   } else {
-    conversationalText = `On a scale from "${item.options[0]?.label}" to "${item.options[item.options.length - 1]?.label}", ${item.text.toLowerCase()}?`;
+    conversationalText = `On a scale from "${labels[0]}" to "${labels[labels.length - 1]}", ${text.toLowerCase()}?`;
   }
 
-  const exampleMappings = item.options.map((option) => ({
-    input: `${option.label.toLowerCase()}`,
+  const exampleMappings = item.options.map((option, i) => ({
+    input: labels[i]!.toLowerCase(),
     value: option.value,
-    label: option.label,
+    label: labels[i]!,
   }));
 
   return {
     itemId: item.id,
     conversationalText,
-    clarificationPrompt: `I want to make sure I understand — would you say "${item.options[1]?.label}" or "${item.options[2]?.label}" best describes your experience?`,
+    clarificationPrompt: `I want to make sure I understand — would you say "${labels[1]}" or "${labels[2]}" best describes your experience?`,
     exampleMappings,
   };
 }

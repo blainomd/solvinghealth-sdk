@@ -4,7 +4,7 @@
  * Trend analysis, MCID calculations, population benchmarking,
  * and risk stratification based on PROM scores.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';

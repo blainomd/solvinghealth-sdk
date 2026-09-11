@@ -2,9 +2,10 @@
  * @solvinghealth/prom — Patient-Reported Outcome Measures
  *
  * Open source PROM collection, scoring, voice administration,
- * and analytics for orthopedic and general health outcomes.
+ * and analytics for orthopedic and general health outcomes. Ships no
+ * third-party questionnaire wording; see NOTICE.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 // Instrument Definitions
@@ -29,6 +30,12 @@ export {
   scorePROMIS10Domain,
   interpretScore,
   isClinicallySignificant,
+  type InstrumentWording,
+  withInstrumentText,
+  registerInstrumentWording,
+  clearInstrumentWording,
+  hasWording,
+  requireWording,
 } from './instruments.js';
 
 // Collection Engine

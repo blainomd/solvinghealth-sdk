@@ -5,7 +5,7 @@
  * generates FHIR QuestionnaireResponse resources, and supports adaptive
  * testing with skip logic.
  *
- * MIT License
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { z } from 'zod';
@@ -96,7 +96,7 @@ export const FHIRQuestionnaireResponseSchema = z.object({
       valueCoding: z.object({
         system: z.string(),
         code: z.string(),
-        display: z.string(),
+        display: z.string().optional(),
       }).optional(),
     })),
   })),
